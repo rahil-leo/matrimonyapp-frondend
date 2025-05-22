@@ -46,9 +46,6 @@
             </div>
             <span @click="Back" class="back">x</span>
         </div>
-        <div class="test">
-
-        </div>
     </div>
 </template>
 
@@ -142,7 +139,8 @@ onMounted(async () => {
     height: 100vh;
     background-color: white;
     padding: 3% 6%;
-    padding-top: 120px
+    padding-top: 120px;
+    /* border: 1px solid black; */
 }
 
 .side-bar {
@@ -162,8 +160,10 @@ onMounted(async () => {
 .content-page {
     height: 80vh;
     width: 100%;
-    background-color: thistle;
+    background-color: white;
     /* display: inline-block; */
+    border: 1px solid rgba(67, 63, 63, 0.156);
+    box-shadow: 1px 1px 3px rgba(27, 26, 26, 0.195);
 
 }
 

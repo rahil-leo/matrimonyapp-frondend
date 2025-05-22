@@ -6,6 +6,9 @@ import Selectauth from '../components/Selectauth.vue'
 import Home from '../components/Home.vue'
 import matches from '../components/matches.vue'
 import Editprofile from '../components/Editprofile.vue'
+import Message from '../components/Message.vue'
+import Requests from '../components/Requests.vue'
+
 
 const routes = [
     { path: '/', component: Home },
@@ -14,7 +17,9 @@ const routes = [
     { path: '/login', component: Login },
     { path: '/personal', component: Personaldetails },
     { path: '/matches', component: matches },
-    { path: '/editprofile', component: Editprofile }
+    { path: '/editprofile', component: Editprofile },
+    { path: '/message', component: Message },
+    {path:'/request',component:Requests}
 ]
 
 const router = createRouter({

@@ -1,6 +1,6 @@
 <template>
   <div class="signup-page">
-    <div class="signup-div p-4 shadow-sm rounded">
+    <div class="p-4 shadow-sm rounded signup-div">
       <h2 class="text-center mb-4">Login</h2>
 
       <div class="form-floating  mb-3">

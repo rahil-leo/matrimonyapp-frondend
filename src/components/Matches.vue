@@ -12,9 +12,12 @@
                         </div>
                         <div class="text-div">
                             <p class="match-name">{{ match.name }}</p>
-                            <p class="match-name">{{ match.age }} yrs &nbsp; | <span>{{ match.education }}</span> &nbsp; | <span>{{ match.address }}</span> &nbsp; | <span>{{ match.occupation }}</span> </p>
-                        <div style="height: 80px;width: 100%;"></div>
-                          <button @click="notIntrested" id="b" class="rounded btn-bg-light">x dont show</button> <button class="rounded btn-warning">send request</button>
+                            <p class="match-name">{{ match.age }} yrs &nbsp; | <span>{{ match.education }}</span> &nbsp;
+                                | <span>{{ match.address }}</span> &nbsp; | <span>{{ match.occupation }}</span> </p>
+                            <div style="height: 80px;width: 100%;"></div>
+                            <button id="b" class="rounded btn-bg-light">x dont show</button> &nbsp;
+                            <button class="rounded btn-warning" @click="sendRequest(match.userid)">send request</button><br>
+                            <a class="message" href="">message</a>
                         </div>
                     </div>
                 </div>
@@ -33,6 +36,35 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const matchprofile = ref([])
+
+
+
+
+async function sendRequest(userid) {
+    const token = localStorage.getItem('token')
+    if (!token) {
+        router.replace('/login')
+    }
+    try {
+        const req = await fetch('http://localhost:3000/requestsmatches', {
+            method: 'post',
+            headers: {
+                Authorization: `${token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                id:userid
+            }),
+        })
+        const res = await req.json()
+        console.log(res)
+        if (req.ok) {
+            // request.value = 
+        }
+    } catch (err) {
+        console.log(err)
+    }
+}
 
 
 
@@ -66,13 +98,13 @@ onMounted(async () => {
     text-transform: capitalize;
 }
 
-.match-page-div{
+.match-page-div {
     background-color: aliceblue;
     height: 100vh;
 }
 
 .match-div {
-    background-color:white;
+    background-color: white;
     border: 1px solid rgba(0, 0, 0, 0.181);
     padding: 10px;
     display: flex;
@@ -102,5 +134,8 @@ onMounted(async () => {
     font-size: 1.2rem;
     margin: 0;
     word-break: break-word;
+}
+.message{
+    display: none;
 }
 </style>
