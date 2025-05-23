@@ -6,7 +6,7 @@
         <div class="container">
             <h2 class="text-center mb-4">Requests</h2>
             <div class="row d-flex justify-content-center gap-3">
-                <div class="col-12 col-md-7 col-lg-8 mb-3" v-for="request in receivedRequests" :key="request.id">
+                <div class="col-12 col-md-7 col-lg-8 mb-3" v-for="request in receivedRequests" :key="request">
                     <div class="match-div gap-3 rounded p-3" style="background-color: #f5f5f5;">
                         <div class="photo-div">
                             <img :src="request.photo" alt="photo" width="100" class="rounded" />
@@ -15,10 +15,9 @@
                             <p class="match-name"><strong>{{ request.name }}</strong> ({{ request.age }} yrs)</p>
                             <p class="match-name">{{ request.education }} | {{ request.occupation }} | {{
                                 request.address }}</p>
-                            <!-- You can add buttons or actions here -->
                             <div style="height: 100px;"></div>
                             <button>decline</button>
-                            <button>accept</button>
+                            <button id="accepted" @click="acceptUser(request.id)">accept</button>
                         </div>
                     </div>
                 </div>
@@ -30,15 +29,48 @@
 <script setup>
 import Navbar from '../components/Navbar.vue'
 import { ref, onMounted } from 'vue'
+import router from '../routes/router'
 
 const receivedRequests = ref([])
 
+
+
+async function acceptUser(id) {
+    console.log(id)
+    const token = localStorage.getItem('token')
+    if (!token) {
+        return router.replace('/login')
+    }
+    try {
+        const req = await fetch('http://localhost:3000/checkaccepted',{
+            method:'post',
+            headers: {
+                Authorization: token,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                id: id
+            }),
+        })
+        const res = await req.json()
+        console.log(res)
+        if (req.ok) {
+            
+        }
+    } catch (err) {
+        console.log(err)
+    }
+}
+
 onMounted(async () => {
     const token = localStorage.getItem('token')
-    if (!token) return
+    if (!token) {
+        return router.replace('/login')
+    }
 
     try {
         const req = await fetch('http://localhost:3000/receivedrequests', {
+            method:'get',
             headers: {
                 Authorization: token
             }
@@ -46,8 +78,6 @@ onMounted(async () => {
         const res = await req.json()
         if (req.ok) {
             receivedRequests.value = res.requests
-        } else {
-            console.error('Failed to fetch requests', res.message)
         }
     } catch (err) {
         console.error('Error fetching requests:', err)
@@ -68,6 +98,8 @@ onMounted(async () => {
 .match-page-div {
     background-color: aliceblue;
     height: 100vh;
+    overflow-y: scroll;
+    scrollbar-width: none;
 }
 
 .match-div {

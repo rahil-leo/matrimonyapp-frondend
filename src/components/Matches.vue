@@ -16,7 +16,7 @@
                                 | <span>{{ match.address }}</span> &nbsp; | <span>{{ match.occupation }}</span> </p>
                             <div style="height: 80px;width: 100%;"></div>
                             <button id="b" class="rounded btn-bg-light">x dont show</button> &nbsp;
-                            <button class="rounded btn-warning" @click="sendRequest(match.userid)">send request</button><br>
+                            <button id="btnCheck" class="rounded btn-warning" @click="sendRequest(match.userid)">send request</button><br>
                             <a class="message" href="">message</a>
                         </div>
                     </div>
@@ -37,8 +37,31 @@ const router = useRouter()
 
 const matchprofile = ref([])
 
-
-
+// function btnRequestedCheck(userid) {
+//     const token = localStorage.getItem('token')
+//     if (!token) {
+//         router.replace('/login')
+//     }
+//     try {
+//         const req = await fetch('http://localhost:3000/btnRequestedCheck', {
+//             method: 'post',
+//             headers: {
+//                 Authorization: `${token}`,
+//                 "Content-Type": "application/json"
+//             },
+//             body: JSON.stringify({
+//                 id: userid
+//             }),
+//         })
+//         const res = await req.json()
+//         console.log(res)
+//         // if (req.ok) {
+//         //     // request.value = 
+//         // }
+//     } catch (err) {
+//         console.log(err)
+//     }
+// }
 
 async function sendRequest(userid) {
     const token = localStorage.getItem('token')
@@ -59,7 +82,13 @@ async function sendRequest(userid) {
         const res = await req.json()
         console.log(res)
         if (req.ok) {
-            // request.value = 
+            // if (userid) {
+            //     console.log(userid)
+            //     let btnCheck = document.getElementById('btnCheck')
+            //     btnCheck.style.display ='none'
+            // }
+            
+            
         }
     } catch (err) {
         console.log(err)
